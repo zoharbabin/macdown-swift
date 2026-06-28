@@ -45,6 +45,9 @@ public struct SplitEditorView: View {
         .onChange(of: document.text) { _, _ in
             scheduleRender()
         }
+        .onChange(of: preferences.renderRevision) { _, _ in
+            renderMarkdown()
+        }
     }
 
     // MARK: - Split View
@@ -189,3 +192,4 @@ public struct SplitEditorView: View {
             ?? PlatformFont.monospacedSystemFont(ofSize: preferences.editorFontSize, weight: .regular)
     }
 }
+

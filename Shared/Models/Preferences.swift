@@ -7,256 +7,262 @@ public final class Preferences {
 
     // MARK: - General
 
-    var suppressesUntitledDocumentOnLaunch: Bool {
-        get { defaults.bool(forKey: "suppressesUntitledDocumentOnLaunch") }
-        set { defaults.set(newValue, forKey: "suppressesUntitledDocumentOnLaunch") }
+    var suppressesUntitledDocumentOnLaunch: Bool = false {
+        didSet { defaults.set(suppressesUntitledDocumentOnLaunch, forKey: "suppressesUntitledDocumentOnLaunch") }
     }
 
-    var createFileForLinkTarget: Bool {
-        get { defaults.bool(forKey: "createFileForLinkTarget") }
-        set { defaults.set(newValue, forKey: "createFileForLinkTarget") }
+    var createFileForLinkTarget: Bool = false {
+        didSet { defaults.set(createFileForLinkTarget, forKey: "createFileForLinkTarget") }
     }
 
     // MARK: - Markdown Extension Flags
 
-    var extensionIntraEmphasis: Bool {
-        get { defaults.bool(forKey: "extensionIntraEmphasis") }
-        set { defaults.set(newValue, forKey: "extensionIntraEmphasis") }
+    var extensionIntraEmphasis: Bool = false {
+        didSet { defaults.set(extensionIntraEmphasis, forKey: "extensionIntraEmphasis") }
     }
 
-    var extensionTables: Bool {
-        get { defaults.boolWithDefault(forKey: "extensionTables", default: true) }
-        set { defaults.set(newValue, forKey: "extensionTables") }
+    var extensionTables: Bool = true {
+        didSet { defaults.set(extensionTables, forKey: "extensionTables"); renderRevision += 1 }
     }
 
-    var extensionFencedCode: Bool {
-        get { defaults.boolWithDefault(forKey: "extensionFencedCode", default: true) }
-        set { defaults.set(newValue, forKey: "extensionFencedCode") }
+    var extensionFencedCode: Bool = true {
+        didSet { defaults.set(extensionFencedCode, forKey: "extensionFencedCode"); renderRevision += 1 }
     }
 
-    var extensionAutolink: Bool {
-        get { defaults.boolWithDefault(forKey: "extensionAutolink", default: true) }
-        set { defaults.set(newValue, forKey: "extensionAutolink") }
+    var extensionAutolink: Bool = true {
+        didSet { defaults.set(extensionAutolink, forKey: "extensionAutolink"); renderRevision += 1 }
     }
 
-    var extensionStrikethrough: Bool {
-        get { defaults.boolWithDefault(forKey: "extensionStrikethrough", default: true) }
-        set { defaults.set(newValue, forKey: "extensionStrikethrough") }
+    var extensionStrikethrough: Bool = true {
+        didSet { defaults.set(extensionStrikethrough, forKey: "extensionStrikethrough"); renderRevision += 1 }
     }
 
-    var extensionUnderline: Bool {
-        get { defaults.bool(forKey: "extensionUnderline") }
-        set { defaults.set(newValue, forKey: "extensionUnderline") }
+    var extensionUnderline: Bool = false {
+        didSet { defaults.set(extensionUnderline, forKey: "extensionUnderline") }
     }
 
-    var extensionSuperscript: Bool {
-        get { defaults.bool(forKey: "extensionSuperscript") }
-        set { defaults.set(newValue, forKey: "extensionSuperscript") }
+    var extensionSuperscript: Bool = false {
+        didSet { defaults.set(extensionSuperscript, forKey: "extensionSuperscript") }
     }
 
-    var extensionHighlight: Bool {
-        get { defaults.bool(forKey: "extensionHighlight") }
-        set { defaults.set(newValue, forKey: "extensionHighlight") }
+    var extensionHighlight: Bool = false {
+        didSet { defaults.set(extensionHighlight, forKey: "extensionHighlight") }
     }
 
-    var extensionFootnotes: Bool {
-        get { defaults.bool(forKey: "extensionFootnotes") }
-        set { defaults.set(newValue, forKey: "extensionFootnotes") }
+    var extensionFootnotes: Bool = false {
+        didSet { defaults.set(extensionFootnotes, forKey: "extensionFootnotes") }
     }
 
-    var extensionQuote: Bool {
-        get { defaults.bool(forKey: "extensionQuote") }
-        set { defaults.set(newValue, forKey: "extensionQuote") }
+    var extensionQuote: Bool = false {
+        didSet { defaults.set(extensionQuote, forKey: "extensionQuote") }
     }
 
-    var extensionSmartyPants: Bool {
-        get { defaults.bool(forKey: "extensionSmartyPants") }
-        set { defaults.set(newValue, forKey: "extensionSmartyPants") }
+    var extensionSmartyPants: Bool = false {
+        didSet { defaults.set(extensionSmartyPants, forKey: "extensionSmartyPants"); renderRevision += 1 }
     }
 
-    var markdownManualRender: Bool {
-        get { defaults.bool(forKey: "markdownManualRender") }
-        set { defaults.set(newValue, forKey: "markdownManualRender") }
+    var markdownManualRender: Bool = false {
+        didSet { defaults.set(markdownManualRender, forKey: "markdownManualRender") }
     }
 
     // MARK: - Editor
 
-    var editorFontName: String {
-        get { defaults.string(forKey: "editorFontName") ?? "Menlo-Regular" }
-        set { defaults.set(newValue, forKey: "editorFontName") }
+    var editorFontName: String = "Menlo-Regular" {
+        didSet { defaults.set(editorFontName, forKey: "editorFontName") }
     }
 
-    var editorFontSize: CGFloat {
-        get {
-            let val = defaults.double(forKey: "editorFontSize")
-            return val > 0 ? val : 14
-        }
-        set { defaults.set(newValue, forKey: "editorFontSize") }
+    var editorFontSize: CGFloat = 14 {
+        didSet { defaults.set(Double(editorFontSize), forKey: "editorFontSize") }
     }
 
-    var editorAutoIncrementNumberedLists: Bool {
-        get { defaults.boolWithDefault(forKey: "editorAutoIncrementNumberedLists", default: true) }
-        set { defaults.set(newValue, forKey: "editorAutoIncrementNumberedLists") }
+    var editorAutoIncrementNumberedLists: Bool = true {
+        didSet { defaults.set(editorAutoIncrementNumberedLists, forKey: "editorAutoIncrementNumberedLists") }
     }
 
-    var editorConvertTabs: Bool {
-        get { defaults.boolWithDefault(forKey: "editorConvertTabs", default: true) }
-        set { defaults.set(newValue, forKey: "editorConvertTabs") }
+    var editorConvertTabs: Bool = true {
+        didSet { defaults.set(editorConvertTabs, forKey: "editorConvertTabs") }
     }
 
-    var editorInsertPrefixInBlock: Bool {
-        get { defaults.boolWithDefault(forKey: "editorInsertPrefixInBlock", default: true) }
-        set { defaults.set(newValue, forKey: "editorInsertPrefixInBlock") }
+    var editorInsertPrefixInBlock: Bool = true {
+        didSet { defaults.set(editorInsertPrefixInBlock, forKey: "editorInsertPrefixInBlock") }
     }
 
-    var editorCompleteMatchingCharacters: Bool {
-        get { defaults.boolWithDefault(forKey: "editorCompleteMatchingCharacters", default: true) }
-        set { defaults.set(newValue, forKey: "editorCompleteMatchingCharacters") }
+    var editorCompleteMatchingCharacters: Bool = true {
+        didSet { defaults.set(editorCompleteMatchingCharacters, forKey: "editorCompleteMatchingCharacters") }
     }
 
-    var editorSyncScrolling: Bool {
-        get { defaults.boolWithDefault(forKey: "editorSyncScrolling", default: true) }
-        set { defaults.set(newValue, forKey: "editorSyncScrolling") }
+    var editorSyncScrolling: Bool = true {
+        didSet { defaults.set(editorSyncScrolling, forKey: "editorSyncScrolling") }
     }
 
-    var editorSmartHome: Bool {
-        get { defaults.boolWithDefault(forKey: "editorSmartHome", default: true) }
-        set { defaults.set(newValue, forKey: "editorSmartHome") }
+    var editorSmartHome: Bool = true {
+        didSet { defaults.set(editorSmartHome, forKey: "editorSmartHome") }
     }
 
-    /// Highlightr (highlight.js) theme name used for editor syntax highlighting.
-    /// Defaults to "xcode" — a light theme that pairs with the GitHub2 preview.
-    var editorStyleName: String {
-        get { defaults.string(forKey: "editorStyleName") ?? "xcode" }
-        set { defaults.set(newValue, forKey: "editorStyleName") }
+    var editorStyleName: String = "xcode" {
+        didSet { defaults.set(editorStyleName, forKey: "editorStyleName") }
     }
 
-    var editorHorizontalInset: CGFloat {
-        get {
-            let val = defaults.double(forKey: "editorHorizontalInset")
-            return val > 0 ? val : 15
-        }
-        set { defaults.set(newValue, forKey: "editorHorizontalInset") }
+    var editorHorizontalInset: CGFloat = 15 {
+        didSet { defaults.set(Double(editorHorizontalInset), forKey: "editorHorizontalInset") }
     }
 
-    var editorVerticalInset: CGFloat {
-        get {
-            let val = defaults.double(forKey: "editorVerticalInset")
-            return val > 0 ? val : 30
-        }
-        set { defaults.set(newValue, forKey: "editorVerticalInset") }
+    var editorVerticalInset: CGFloat = 30 {
+        didSet { defaults.set(Double(editorVerticalInset), forKey: "editorVerticalInset") }
     }
 
-    var editorLineSpacing: CGFloat {
-        get {
-            let val = defaults.double(forKey: "editorLineSpacing")
-            return val > 0 ? val : 3
-        }
-        set { defaults.set(newValue, forKey: "editorLineSpacing") }
+    var editorLineSpacing: CGFloat = 3 {
+        didSet { defaults.set(Double(editorLineSpacing), forKey: "editorLineSpacing") }
     }
 
-    var editorWidthLimited: Bool {
-        get { defaults.bool(forKey: "editorWidthLimited") }
-        set { defaults.set(newValue, forKey: "editorWidthLimited") }
+    var editorWidthLimited: Bool = false {
+        didSet { defaults.set(editorWidthLimited, forKey: "editorWidthLimited") }
     }
 
-    var editorMaximumWidth: CGFloat {
-        get {
-            let val = defaults.double(forKey: "editorMaximumWidth")
-            return val > 0 ? val : 800
-        }
-        set { defaults.set(newValue, forKey: "editorMaximumWidth") }
+    var editorMaximumWidth: CGFloat = 800 {
+        didSet { defaults.set(Double(editorMaximumWidth), forKey: "editorMaximumWidth") }
     }
 
-    var editorOnRight: Bool {
-        get { defaults.bool(forKey: "editorOnRight") }
-        set { defaults.set(newValue, forKey: "editorOnRight") }
+    var editorOnRight: Bool = false {
+        didSet { defaults.set(editorOnRight, forKey: "editorOnRight") }
     }
 
-    var editorShowWordCount: Bool {
-        get { defaults.bool(forKey: "editorShowWordCount") }
-        set { defaults.set(newValue, forKey: "editorShowWordCount") }
+    var editorShowWordCount: Bool = false {
+        didSet { defaults.set(editorShowWordCount, forKey: "editorShowWordCount") }
     }
 
-    var editorScrollsPastEnd: Bool {
-        get { defaults.boolWithDefault(forKey: "editorScrollsPastEnd", default: true) }
-        set { defaults.set(newValue, forKey: "editorScrollsPastEnd") }
+    var editorScrollsPastEnd: Bool = true {
+        didSet { defaults.set(editorScrollsPastEnd, forKey: "editorScrollsPastEnd") }
     }
 
-    var editorEnsuresNewlineAtEndOfFile: Bool {
-        get { defaults.boolWithDefault(forKey: "editorEnsuresNewlineAtEndOfFile", default: true) }
-        set { defaults.set(newValue, forKey: "editorEnsuresNewlineAtEndOfFile") }
+    var editorEnsuresNewlineAtEndOfFile: Bool = true {
+        didSet { defaults.set(editorEnsuresNewlineAtEndOfFile, forKey: "editorEnsuresNewlineAtEndOfFile") }
     }
 
     // MARK: - HTML / Preview
 
-    var htmlStyleName: String {
-        get { defaults.string(forKey: "htmlStyleName") ?? "GitHub2" }
-        set { defaults.set(newValue, forKey: "htmlStyleName") }
+    var htmlStyleName: String = "GitHub2" {
+        didSet { defaults.set(htmlStyleName, forKey: "htmlStyleName"); renderRevision += 1 }
     }
 
-    var htmlDetectFrontMatter: Bool {
-        get { defaults.boolWithDefault(forKey: "htmlDetectFrontMatter", default: true) }
-        set { defaults.set(newValue, forKey: "htmlDetectFrontMatter") }
+    var htmlDetectFrontMatter: Bool = true {
+        didSet { defaults.set(htmlDetectFrontMatter, forKey: "htmlDetectFrontMatter"); renderRevision += 1 }
     }
 
-    var htmlTaskList: Bool {
-        get { defaults.boolWithDefault(forKey: "htmlTaskList", default: true) }
-        set { defaults.set(newValue, forKey: "htmlTaskList") }
+    var htmlTaskList: Bool = true {
+        didSet { defaults.set(htmlTaskList, forKey: "htmlTaskList"); renderRevision += 1 }
     }
 
-    var htmlHardWrap: Bool {
-        get { defaults.bool(forKey: "htmlHardWrap") }
-        set { defaults.set(newValue, forKey: "htmlHardWrap") }
+    var htmlHardWrap: Bool = false {
+        didSet { defaults.set(htmlHardWrap, forKey: "htmlHardWrap"); renderRevision += 1 }
     }
 
-    var htmlMathJax: Bool {
-        get { defaults.bool(forKey: "htmlMathJax") }
-        set { defaults.set(newValue, forKey: "htmlMathJax") }
+    var htmlMathJax: Bool = false {
+        didSet { defaults.set(htmlMathJax, forKey: "htmlMathJax"); renderRevision += 1 }
     }
 
-    var htmlMathJaxInlineDollar: Bool {
-        get { defaults.bool(forKey: "htmlMathJaxInlineDollar") }
-        set { defaults.set(newValue, forKey: "htmlMathJaxInlineDollar") }
+    var htmlMathJaxInlineDollar: Bool = false {
+        didSet { defaults.set(htmlMathJaxInlineDollar, forKey: "htmlMathJaxInlineDollar"); renderRevision += 1 }
     }
 
-    var htmlSyntaxHighlighting: Bool {
-        get { defaults.boolWithDefault(forKey: "htmlSyntaxHighlighting", default: true) }
-        set { defaults.set(newValue, forKey: "htmlSyntaxHighlighting") }
+    var htmlSyntaxHighlighting: Bool = true {
+        didSet { defaults.set(htmlSyntaxHighlighting, forKey: "htmlSyntaxHighlighting"); renderRevision += 1 }
     }
 
-    var htmlHighlightingThemeName: String {
-        get { defaults.string(forKey: "htmlHighlightingThemeName") ?? "prism" }
-        set { defaults.set(newValue, forKey: "htmlHighlightingThemeName") }
+    var htmlHighlightingThemeName: String = "prism" {
+        didSet { defaults.set(htmlHighlightingThemeName, forKey: "htmlHighlightingThemeName"); renderRevision += 1 }
     }
 
-    var htmlLineNumbers: Bool {
-        get { defaults.bool(forKey: "htmlLineNumbers") }
-        set { defaults.set(newValue, forKey: "htmlLineNumbers") }
+    var htmlLineNumbers: Bool = false {
+        didSet { defaults.set(htmlLineNumbers, forKey: "htmlLineNumbers"); renderRevision += 1 }
     }
 
-    var htmlMermaid: Bool {
-        get { defaults.bool(forKey: "htmlMermaid") }
-        set { defaults.set(newValue, forKey: "htmlMermaid") }
+    var htmlMermaid: Bool = false {
+        didSet { defaults.set(htmlMermaid, forKey: "htmlMermaid"); renderRevision += 1 }
     }
 
-    var htmlRendersTOC: Bool {
-        get { defaults.bool(forKey: "htmlRendersTOC") }
-        set { defaults.set(newValue, forKey: "htmlRendersTOC") }
+    var htmlRendersTOC: Bool = false {
+        didSet { defaults.set(htmlRendersTOC, forKey: "htmlRendersTOC"); renderRevision += 1 }
     }
 
     // MARK: - Private
 
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
 
-    public init() {}
-}
+    // Stored property tracked by @Observable; incremented by every render-affecting setter
+    // so SplitEditorView can watch a single value instead of every individual preference.
+    var renderRevision: Int = 0
 
-// MARK: - UserDefaults Helper
+    public init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        // Load persisted values. didSet is NOT called for direct property assignments
+        // within the class's own init, so no side effects (no UserDefaults writes, no
+        // renderRevision increments) occur here.
+        suppressesUntitledDocumentOnLaunch = defaults.bool(forKey: "suppressesUntitledDocumentOnLaunch")
+        createFileForLinkTarget = defaults.bool(forKey: "createFileForLinkTarget")
 
-private extension UserDefaults {
-    func boolWithDefault(forKey key: String, default defaultValue: Bool) -> Bool {
-        if object(forKey: key) == nil { return defaultValue }
-        return bool(forKey: key)
+        extensionIntraEmphasis = defaults.bool(forKey: "extensionIntraEmphasis")
+        extensionTables = defaults.object(forKey: "extensionTables") != nil
+            ? defaults.bool(forKey: "extensionTables") : true
+        extensionFencedCode = defaults.object(forKey: "extensionFencedCode") != nil
+            ? defaults.bool(forKey: "extensionFencedCode") : true
+        extensionAutolink = defaults.object(forKey: "extensionAutolink") != nil
+            ? defaults.bool(forKey: "extensionAutolink") : true
+        extensionStrikethrough = defaults.object(forKey: "extensionStrikethrough") != nil
+            ? defaults.bool(forKey: "extensionStrikethrough") : true
+        extensionUnderline = defaults.bool(forKey: "extensionUnderline")
+        extensionSuperscript = defaults.bool(forKey: "extensionSuperscript")
+        extensionHighlight = defaults.bool(forKey: "extensionHighlight")
+        extensionFootnotes = defaults.bool(forKey: "extensionFootnotes")
+        extensionQuote = defaults.bool(forKey: "extensionQuote")
+        extensionSmartyPants = defaults.bool(forKey: "extensionSmartyPants")
+        markdownManualRender = defaults.bool(forKey: "markdownManualRender")
+
+        editorFontName = defaults.string(forKey: "editorFontName") ?? "Menlo-Regular"
+        let fontSize = defaults.double(forKey: "editorFontSize")
+        editorFontSize = fontSize > 0 ? fontSize : 14
+        editorAutoIncrementNumberedLists = defaults.object(forKey: "editorAutoIncrementNumberedLists") != nil
+            ? defaults.bool(forKey: "editorAutoIncrementNumberedLists") : true
+        editorConvertTabs = defaults.object(forKey: "editorConvertTabs") != nil
+            ? defaults.bool(forKey: "editorConvertTabs") : true
+        editorInsertPrefixInBlock = defaults.object(forKey: "editorInsertPrefixInBlock") != nil
+            ? defaults.bool(forKey: "editorInsertPrefixInBlock") : true
+        editorCompleteMatchingCharacters = defaults.object(forKey: "editorCompleteMatchingCharacters") != nil
+            ? defaults.bool(forKey: "editorCompleteMatchingCharacters") : true
+        editorSyncScrolling = defaults.object(forKey: "editorSyncScrolling") != nil
+            ? defaults.bool(forKey: "editorSyncScrolling") : true
+        editorSmartHome = defaults.object(forKey: "editorSmartHome") != nil
+            ? defaults.bool(forKey: "editorSmartHome") : true
+        editorStyleName = defaults.string(forKey: "editorStyleName") ?? "xcode"
+        let hInset = defaults.double(forKey: "editorHorizontalInset")
+        editorHorizontalInset = hInset > 0 ? hInset : 15
+        let vInset = defaults.double(forKey: "editorVerticalInset")
+        editorVerticalInset = vInset > 0 ? vInset : 30
+        let lineSpacing = defaults.double(forKey: "editorLineSpacing")
+        editorLineSpacing = lineSpacing > 0 ? lineSpacing : 3
+        editorWidthLimited = defaults.bool(forKey: "editorWidthLimited")
+        let maxWidth = defaults.double(forKey: "editorMaximumWidth")
+        editorMaximumWidth = maxWidth > 0 ? maxWidth : 800
+        editorOnRight = defaults.bool(forKey: "editorOnRight")
+        editorShowWordCount = defaults.bool(forKey: "editorShowWordCount")
+        editorScrollsPastEnd = defaults.object(forKey: "editorScrollsPastEnd") != nil
+            ? defaults.bool(forKey: "editorScrollsPastEnd") : true
+        editorEnsuresNewlineAtEndOfFile = defaults.object(forKey: "editorEnsuresNewlineAtEndOfFile") != nil
+            ? defaults.bool(forKey: "editorEnsuresNewlineAtEndOfFile") : true
+
+        htmlStyleName = defaults.string(forKey: "htmlStyleName") ?? "GitHub2"
+        htmlDetectFrontMatter = defaults.object(forKey: "htmlDetectFrontMatter") != nil
+            ? defaults.bool(forKey: "htmlDetectFrontMatter") : true
+        htmlTaskList = defaults.object(forKey: "htmlTaskList") != nil
+            ? defaults.bool(forKey: "htmlTaskList") : true
+        htmlHardWrap = defaults.bool(forKey: "htmlHardWrap")
+        htmlMathJax = defaults.bool(forKey: "htmlMathJax")
+        htmlMathJaxInlineDollar = defaults.bool(forKey: "htmlMathJaxInlineDollar")
+        htmlSyntaxHighlighting = defaults.object(forKey: "htmlSyntaxHighlighting") != nil
+            ? defaults.bool(forKey: "htmlSyntaxHighlighting") : true
+        htmlHighlightingThemeName = defaults.string(forKey: "htmlHighlightingThemeName") ?? "prism"
+        htmlLineNumbers = defaults.bool(forKey: "htmlLineNumbers")
+        htmlMermaid = defaults.bool(forKey: "htmlMermaid")
+        htmlRendersTOC = defaults.bool(forKey: "htmlRendersTOC")
     }
 }
