@@ -32,13 +32,24 @@ jobs:
       APPLE_ID: ${{ secrets.APPLE_ID }}
       APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # tags + commit count for versioning
 
       - name: Select latest Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.app || true
+        run: |
+          LATEST=$(ls -d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -1)
+          [ -n "$LATEST" ] && sudo xcode-select -s "$LATEST"
+          swift --version
+
+      - name: Cache SPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: .build
+          key: spm-${{ runner.os }}-${{ hashFiles('Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
 
       - name: Run tests
         run: swift test
@@ -60,7 +71,7 @@ jobs:
           rm -f "$RUNNER_TEMP/cert.p12"
 
       - name: Store notary credentials
-        if: ${{ env.APPLE_ID != '' }}
+        if: ${{ env.APPLE_ID != '' && env.APPLE_APP_PASSWORD != '' && env.APPLE_TEAM_ID != '' }}
         run: |
           xcrun notarytool store-credentials macdown-notary \
             --apple-id "$APPLE_ID" \
