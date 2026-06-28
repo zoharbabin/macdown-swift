@@ -171,7 +171,7 @@ public struct HTMLComposer: Sendable {
     }
 
     private func loadResourceFile(name: String, ext: String, subdirectory: String) -> String? {
-        guard let url = Bundle.module.url(forResource: name, withExtension: ext, subdirectory: subdirectory) else {
+        guard let url = coreBundle.url(forResource: name, withExtension: ext, subdirectory: subdirectory) else {
             return nil
         }
         return try? String(contentsOf: url, encoding: .utf8)
@@ -194,7 +194,7 @@ public struct HTMLComposer: Sendable {
     // MARK: - Available Styles
 
     public static func availablePreviewStyles() -> [String] {
-        guard let url = Bundle.module.url(forResource: "Styles", withExtension: nil),
+        guard let url = coreBundle.url(forResource: "Styles", withExtension: nil),
               let contents = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
         else { return [] }
         return contents

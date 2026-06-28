@@ -48,7 +48,7 @@ public struct EditorTheme: Sendable {
 
     /// Loads a theme from a `.style` file in the Themes resource bundle.
     public static func load(named name: String) -> EditorTheme? {
-        guard let url = Bundle.module.url(
+        guard let url = coreBundle.url(
             forResource: name,
             withExtension: "style",
             subdirectory: "Themes"
@@ -60,7 +60,7 @@ public struct EditorTheme: Sendable {
 
     /// Loads all available themes from the Themes resource directory.
     public static func availableThemes() -> [String] {
-        guard let url = Bundle.module.url(forResource: "Themes", withExtension: nil),
+        guard let url = coreBundle.url(forResource: "Themes", withExtension: nil),
               let contents = try? FileManager.default.contentsOfDirectory(
                   at: url,
                   includingPropertiesForKeys: nil
